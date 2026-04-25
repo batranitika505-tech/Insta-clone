@@ -70,10 +70,13 @@ A high-fidelity, high-aesthetic Instagram clone built with **React**, **Tailwind
 
 ---
 
-## 👤 Author
+## 👥 Authors
 
-**Amresh Anand**  
-*Newton School of Technology*
+| Name | GitHub | Institution |
+|------|--------|-------------|
+| **Amresh Anand** | [@itsamreshanand](https://github.com/batranitika505-tech) | Newton School of Technology |
+| **Shravani Patangrao** | — | Newton School of Technology |
+| **Nitika** | — | Newton School of Technology |
 
 ---
 

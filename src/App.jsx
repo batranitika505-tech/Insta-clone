@@ -507,16 +507,6 @@ export default function App() {
       <div className="flex min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-all duration-700">
         
         {/* Left Sidebar */}
-        <aside className="fixed left-0 top-0 h-screen w-[72px] xl:w-[245px] border-r border-[var(--border)] flex flex-col p-4 z-50 bg-[var(--bg-primary)]/80 backdrop-blur-xl transition-all duration-500">
-          <div className="xl:px-4 mb-10 py-8">
-            <div className="flex items-center gap-3 cursor-pointer group" onClick={() => setActivePage('home')}>
-                <Instagram className="w-8 h-8 text-white p-1.5 rounded-xl bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] shadow-lg group-hover:scale-110 transition-transform" />
-                <h1 className="hidden xl:block text-2xl font-black italic tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] group-hover:opacity-80 transition-opacity">
-                  Instagram
-                </h1>
-
-
-
         <aside className="fixed left-0 top-0 h-screen w-[72px] xl:w-[245px] border-r border-[var(--border)] flex flex-col p-3 z-50 bg-[var(--bg-primary)] transition-all">
           <div className="xl:px-3 mb-10 py-8">
             <div 
