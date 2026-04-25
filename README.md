@@ -72,13 +72,3 @@ A high-fidelity, ultra-premium Instagram ecosystem built with **React 18**, **Fr
    ```
 
 ---
-
-## 👤 Author
-
-**Amresh Anand**  
-*Creative Engineering | Newton School of Technology*
-
----
-
-> [!IMPORTANT]
-> **Project Note**: This application is a high-end UI/UX demonstration developed to showcase advanced React architecture, technical styling, and modern design principles.

@@ -507,6 +507,7 @@ export default function App() {
       <div className="flex min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-all duration-700">
         
         {/* Left Sidebar */}
+
         <aside className="fixed left-0 top-0 h-screen w-[72px] xl:w-[245px] border-r border-[var(--border)] flex flex-col p-4 z-50 bg-[var(--bg-primary)]/80 backdrop-blur-xl transition-all duration-500">
           <div className="xl:px-4 mb-10 py-8">
             <div className="flex items-center gap-3 cursor-pointer group" onClick={() => setActivePage('home')}>
@@ -514,6 +515,25 @@ export default function App() {
                 <h1 className="hidden xl:block text-2xl font-black italic tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] group-hover:opacity-80 transition-opacity">
                   Instagram
                 </h1>
+        <aside className="fixed left-0 top-0 h-screen w-[72px] xl:w-[245px] border-r border-[var(--border)] flex flex-col p-3 z-50 bg-[var(--bg-primary)] transition-all">
+          <div className="xl:px-3 mb-10 py-8">
+            <div 
+              className="hidden xl:flex items-center gap-3 cursor-pointer group select-none"
+              onClick={() => setActivePage('home')}
+            >
+              <div className="relative">
+                <div className="absolute -inset-1 bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] rounded-xl blur opacity-70 group-hover:opacity-100 transition duration-300"></div>
+                <div className="relative bg-[var(--bg-primary)] p-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800">
+                   <Camera className="w-7 h-7 text-[#dc2743]" />
+                </div>
+              </div>
+              <h1 className="text-3xl font-bold tracking-tighter cool-logo mt-1">Instagram</h1>
+            </div>
+            <div className="xl:hidden flex justify-center cursor-pointer group relative" onClick={() => setActivePage('home')}>
+               <div className="absolute -inset-1 bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] rounded-xl blur opacity-70 group-hover:opacity-100 transition duration-300"></div>
+               <div className="relative bg-[var(--bg-primary)] p-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800">
+                  <Camera className="w-6 h-6 text-[#dc2743]" />
+               </div>
             </div>
           </div>
 
