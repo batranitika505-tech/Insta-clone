@@ -13,30 +13,32 @@ const USER_PIC = "https://avatars.githubusercontent.com/u/108920197?v=4";
 
 const STORIES = [
   { id: 1, username: "Your Story", img: USER_PIC, unseen: true, isUser: true },
-  { id: 2, username: "nasa", img: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=200", unseen: true },
-  { id: 3, username: "nature", img: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=200", unseen: true },
-  { id: 4, username: "tech_insider", img: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=200", unseen: false },
-  { id: 5, username: "explore_more", img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=200", unseen: true },
-  { id: 6, username: "artist_hub", img: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=200", unseen: false },
-  { id: 7, username: "fitness_pro", img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=200", unseen: true },
+  { id: 2, username: "nasa", img: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&q=80&w=200", unseen: true },
+  { id: 3, username: "nature", img: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=200", unseen: true },
+  { id: 4, username: "tech_insider", img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=200", unseen: false },
+  { id: 5, username: "explore_more", img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&q=80&w=200", unseen: true },
+  { id: 6, username: "artist_hub", img: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=200", unseen: false },
+  { id: 7, username: "fitness_pro", img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=200", unseen: true },
 ];
 
 const POSTS = [
   {
     id: 1,
-    user: { username: "nasa", avatar: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=100", verified: true },
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800",
+    user: { username: "nasa", avatar: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&q=80&w=100", verified: true },
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=100&w=1080",
     likes: "124,532",
     caption: "A breathtaking view of our home planet from the International Space Station. Darkness and light dance across the globe. 🌍✨",
     timestamp: "2h",
+    ratio: "aspect-[4/5]"
   },
   {
     id: 2,
-    user: { username: "nature", avatar: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=100" },
-    image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800",
+    user: { username: "nature", avatar: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=100" },
+    image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&q=100&w=1080",
     likes: "85,210",
     caption: "The morning mist rolling over the mountains is a sight to behold. Mother nature never ceases to amaze. 🏔️💨",
     timestamp: "4h",
+    ratio: "aspect-square"
   }
 ];
 
@@ -198,18 +200,19 @@ const HomeFeed = ({ isDark }) => {
 const PostCard = ({ post }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [showMore, setShowMore] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   return (
-    <div className="card mb-2 max-w-[470px] mx-auto transition-all duration-500 hover:shadow-2xl hover:shadow-black/10 dark:hover:shadow-white/5">
-      <div className="flex items-center justify-between px-5 py-4">
+    <div className="card mb-6 max-w-[475px] mx-auto transition-all duration-700 hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_20px_50px_rgba(255,255,255,0.03)] group/card">
+      <div className="flex items-center justify-between px-5 py-4 border-b border-border/5">
         <div className="flex items-center gap-4 group cursor-pointer">
           <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-transparent group-hover:border-instagram-blue transition-all p-0.5 shadow-sm">
-            <div className="w-full h-full rounded-full overflow-hidden">
-               <img src={post.user.avatar} className="w-full h-full object-cover" />
+            <div className="w-full h-full rounded-full overflow-hidden bg-zinc-200 dark:bg-zinc-800">
+               <img src={post.user.avatar} className="w-full h-full object-cover" loading="lazy" />
             </div>
           </div>
           <div className="flex flex-col">
-            <span className="font-black text-sm tracking-tight flex items-center gap-1.5">{post.user.username} {post.user.verified && <Verified className="w-3.5 h-3.5 text-instagram-blue fill-instagram-blue p-0.5 bg-white rounded-full translate-y-[-1px]" />}</span>
+            <span className="font-black text-sm tracking-tight flex items-center gap-1.5">{post.user.username} {post.user.verified && <Verified className="w-3.5 h-3.5 text-instagram-blue fill-instagram-blue p-0.5 bg-white rounded-full" />}</span>
             <span className="text-zinc-500 text-[10px] uppercase font-black tracking-widest leading-none mt-0.5">{post.timestamp} ago</span>
           </div>
         </div>
@@ -218,12 +221,18 @@ const PostCard = ({ post }) => {
         </button>
       </div>
       
-      <div className="aspect-square bg-zinc-100 dark:bg-zinc-900 overflow-hidden relative group">
-        <img src={post.image} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
-        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+      <div className={`relative overflow-hidden bg-zinc-100 dark:bg-zinc-900 ${post.ratio || 'aspect-square'}`}>
+        {!imgLoaded && <div className="absolute inset-0 bg-gradient-to-r from-transparent via-zinc-200/20 to-transparent animate-scanning" />}
+        <img 
+          src={post.image} 
+          className={`w-full h-full object-cover transition-all duration-1000 ${imgLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'} group-hover/card:scale-105`}
+          onLoad={() => setImgLoaded(true)}
+          loading="lazy"
+        />
+        <div className="absolute inset-0 pointer-events-none border-[12px] border-white/5 opacity-0 group-hover/card:opacity-100 transition-opacity duration-700" />
       </div>
 
-      <div className="px-6 py-5 space-y-4">
+      <div className="px-6 py-5 space-y-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-6">
             <motion.button whileTap={{ scale: 1.5 }} onClick={() => setIsLiked(!isLiked)}>
@@ -238,16 +247,16 @@ const PostCard = ({ post }) => {
           <p className="font-black tracking-tight text-base italic">{post.likes} likes</p>
           <div className="flex gap-2 leading-relaxed">
             <span className="font-black italic">{post.user.username}</span>
-            <span className={`${showMore ? "" : "line-clamp-2"} text-zinc-700 dark:text-zinc-300 font-medium`}>{post.caption}</span>
+            <span className={`${showMore ? "" : "line-clamp-2"} text-zinc-700 dark:text-zinc-300 font-bold opacity-90`}>{post.caption}</span>
           </div>
-          {!showMore && <button onClick={() => setShowMore(true)} className="text-zinc-500 text-[11px] font-black uppercase tracking-widest hover:text-instagram-blue py-1">View Archive Comments</button>}
+          {!showMore && <button onClick={() => setShowMore(true)} className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.2em] hover:text-instagram-blue py-1 transition-colors">Read Full Description</button>}
         </div>
-        <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800/50 flex items-center gap-4">
-          <div className="w-7 h-7 rounded-full overflow-hidden opacity-40 hover:opacity-100 transition-opacity">
+        <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800/30 flex items-center gap-4">
+          <div className="w-8 h-8 rounded-full overflow-hidden opacity-40 hover:opacity-100 transition-opacity">
              <img src={USER_PIC} className="w-full h-full object-cover" />
           </div>
-          <input type="text" placeholder="Add a comment..." className="flex-grow bg-transparent outline-none text-sm placeholder:text-zinc-500 placeholder:font-black placeholder:uppercase placeholder:tracking-widest" />
-          <button className="text-instagram-blue text-xs font-black uppercase tracking-widest opacity-0 hover:opacity-100 transition-opacity pr-2">Post</button>
+          <input type="text" placeholder="WRITE A THOUGHT..." className="flex-grow bg-transparent outline-none text-[10px] font-black uppercase tracking-[0.2em] placeholder:text-zinc-400" />
+          <button className="text-instagram-blue text-[10px] font-black uppercase tracking-[0.2em] opacity-30 hover:opacity-100 transition-opacity pr-2">Share</button>
         </div>
       </div>
     </div>
