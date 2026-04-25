@@ -39,6 +39,33 @@ const POSTS = [
     caption: "The morning mist rolling over the mountains is a sight to behold. Mother nature never ceases to amaze. 🏔️💨",
     timestamp: "4h",
     ratio: "aspect-square"
+  },
+  {
+    id: 3,
+    user: { username: "explore_more", avatar: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&q=80&w=100" },
+    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&q=100&w=1080",
+    likes: "42,105",
+    caption: "Wanderlust is a powerful thing. There's so much beauty in the world waiting to be discovered. 🌲✨",
+    timestamp: "6h",
+    ratio: "aspect-[4/5]"
+  },
+  {
+    id: 4,
+    user: { username: "tech_insider", avatar: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=100" },
+    image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=100&w=1080",
+    likes: "18,942",
+    caption: "The future is build one line of code at a time. Minimalist workstation vibes. 💻⚡",
+    timestamp: "8h",
+    ratio: "aspect-square"
+  },
+  {
+    id: 5,
+    user: { username: "artist_hub", avatar: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=100" },
+    image: "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?auto=format&fit=crop&q=100&w=1080",
+    likes: "31,200",
+    caption: "Abstract thoughts captured in vibrant colors. Art is the language of the soul. 🎨💫",
+    timestamp: "12h",
+    ratio: "aspect-[4/5]"
   }
 ];
 
@@ -294,9 +321,9 @@ const SearchPage = () => {
 
 const ReelsPage = () => (
     <div className="snap-y-container no-scrollbar bg-black h-screen overflow-y-scroll">
-      {[...Array(6)].map((_, i) => (
+      {[...Array(12)].map((_, i) => (
           <div key={i} className="h-screen w-full snap-start relative flex flex-col justify-end p-8 bg-zinc-900 border-b border-white/5">
-              <img src={`https://picsum.photos/600/1200?random=${i + 800}`} className="absolute inset-0 w-full h-full object-cover opacity-60" />
+              <img src={`https://picsum.photos/600/1200?random=${i + 850}`} className="absolute inset-0 w-full h-full object-cover opacity-60" />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
               
               <div className="relative z-10 flex items-end justify-between max-w-[500px] mx-auto w-full pb-10">
