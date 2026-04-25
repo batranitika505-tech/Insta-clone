@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 
 // --- MOCK DATA ---
-const USER_PIC = "https://avatars.githubusercontent.com/u/108920197?v=4";
+const USER_PIC = "/nirmaan.jpeg";
 
 const STORIES = [
   { id: 1, username: "Your Story", img: USER_PIC, unseen: true, isUser: true },
