@@ -60,9 +60,7 @@ const CHATS = [
 const SideNavItem = ({ icon: Icon, label, active, onClick }) => (
   <div 
     onClick={onClick}
-
     className={`nav-item group ${active ? 'bg-zinc-500/5' : ''}`}
-    className={`nav-item group transition-all duration-200 ${active ? 'font-bold active-nav-item' : 'font-normal opacity-80 hover:opacity-100'}`}
   >
     <div className="relative">
       <Icon className={`w-7 h-7 transition-all duration-300 ${active ? 'scale-110 text-instagram-blue' : 'group-hover:scale-110 group-active:scale-95'}`} />
@@ -100,22 +98,6 @@ const StoryViewer = ({ story, onClose }) => {
       <div className="absolute top-8 left-8 right-8 flex gap-1 z-10">
         <div className="flex-grow h-0.5 bg-white/20 rounded-full overflow-hidden">
           <div className="h-full bg-white" style={{ width: `${progress}%` }} />
-const HomeFeed = ({ isDark }) => (
-  <section className="flex-grow max-w-[630px] pt-8 px-4 pb-10 mx-auto">
-    <div className="flex gap-4 mb-8 overflow-x-auto no-scrollbar py-2">
-      {STORIES.map(story => (
-        <div key={story.id} className="flex flex-col items-center gap-1 cursor-pointer flex-shrink-0">
-          <div className={`relative ${story.unseen ? 'story-ring' : 'p-[2px] bg-zinc-300 dark:bg-zinc-600 rounded-full'}`}>
-            <div className="w-[66px] h-[66px] rounded-full border-2 border-[var(--bg-primary)] overflow-hidden bg-zinc-200 dark:bg-zinc-800">
-              <img src={story.img} alt={story.username} className="w-full h-full object-cover" style={{ objectPosition: story.pos || 'center' }} />
-            </div>
-            {story.isUser && (
-              <div className="absolute bottom-0 right-0 bg-blue-500 border-2 border-[var(--bg-primary)] rounded-full p-0.5 translate-x-1 translate-y-1">
-                <PlusSquare className="w-4 h-4 text-white fill-white" />
-              </div>
-            )}
-          </div>
-          <span className="text-[12px] truncate w-20 text-center text-zinc-500 dark:text-zinc-400">{story.username}</span>
         </div>
       </div>
       
@@ -177,23 +159,13 @@ const HomeFeed = ({ isDark }) => {
             <span className={`text-[11px] font-black uppercase tracking-widest truncate w-[70px] text-center ${story.unseen ? 'text-[var(--text-primary)]' : 'text-zinc-500 opacity-60'}`}>
               {story.username.slice(0, 8)}..
             </span>
-    <div className="post-card-wrapper mb-4 max-w-[470px] mx-auto p-[1px] rounded-[12px] transition-all duration-300 group">
-      <div className="card border-none bg-[var(--bg-card)] rounded-[11px] overflow-hidden w-full h-full transition-colors duration-300">
-        <div className="flex items-center justify-between px-4 py-3">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full overflow-hidden border border-zinc-200 dark:border-zinc-700">
-            <img src={post.user.avatar} className="w-full h-full object-cover" style={{ objectPosition: post.user.pos || 'center' }} />
-
           </div>
         ))}
       </div>
       <div className="flex flex-col gap-10">
         {POSTS.map(post => <PostCard key={post.id} post={post} />)}
       </div>
-
     </section>
-      </div>
-    </div>
   );
 };
 
@@ -508,7 +480,6 @@ export default function App() {
       <div className="flex min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-all duration-700">
         
         {/* Left Sidebar */}
-
         <aside className="fixed left-0 top-0 h-screen w-[72px] xl:w-[245px] border-r border-[var(--border)] flex flex-col p-4 z-50 bg-[var(--bg-primary)]/80 backdrop-blur-xl transition-all duration-500">
           <div className="xl:px-4 mb-10 py-8">
             <div className="flex items-center gap-3 cursor-pointer group" onClick={() => setActivePage('home')}>
@@ -516,24 +487,6 @@ export default function App() {
                 <h1 className="hidden xl:block text-2xl font-black italic tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] group-hover:opacity-80 transition-opacity">
                   Instagram
                 </h1>
-
-        <aside className="fixed left-0 top-0 h-screen w-[72px] xl:w-[245px] border-r border-[var(--border)] flex flex-col p-3 z-50 bg-[var(--bg-primary)] transition-all">
-          <div className="xl:px-3 mb-10 py-8">
-            <h1 
-              className="hidden xl:block text-3xl font-bold tracking-tighter cursor-pointer select-none" 
-              style={{ 
-                fontFamily: "'Pacifico', cursive", 
-                background: "linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)", 
-                WebkitBackgroundClip: "text", 
-                WebkitTextFillColor: "transparent", 
-                filter: "drop-shadow(0 0 8px rgba(225, 48, 108, 0.4))" 
-              }} 
-              onClick={() => setActivePage('home')}
-            >
-              Instagram
-            </h1>
-            <div className="xl:hidden flex justify-center cursor-pointer" onClick={() => setActivePage('home')}>
-               <div className="w-7 h-7 bg-[var(--text-primary)] rounded-md"></div>
             </div>
           </div>
 
