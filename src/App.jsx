@@ -510,21 +510,23 @@ export default function App() {
 
         <aside className="fixed left-0 top-0 h-screen w-[72px] xl:w-[245px] border-r border-[var(--border)] flex flex-col p-3 z-50 bg-[var(--bg-primary)] transition-all">
           <div className="xl:px-3 mb-10 py-8">
-            <h1 
-              className="hidden xl:block text-3xl font-bold tracking-tighter cursor-pointer select-none" 
-              style={{ 
-                fontFamily: "'Pacifico', cursive", 
-                background: "linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)", 
-                WebkitBackgroundClip: "text", 
-                WebkitTextFillColor: "transparent", 
-                filter: "drop-shadow(0 0 8px rgba(225, 48, 108, 0.4))" 
-              }} 
+            <div 
+              className="hidden xl:flex items-center gap-3 cursor-pointer group select-none"
               onClick={() => setActivePage('home')}
             >
-              Instagram
-            </h1>
-            <div className="xl:hidden flex justify-center cursor-pointer" onClick={() => setActivePage('home')}>
-               <div className="w-7 h-7 bg-[var(--text-primary)] rounded-md"></div>
+              <div className="relative">
+                <div className="absolute -inset-1 bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] rounded-xl blur opacity-70 group-hover:opacity-100 transition duration-300"></div>
+                <div className="relative bg-[var(--bg-primary)] p-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800">
+                   <Camera className="w-7 h-7 text-[#dc2743]" />
+                </div>
+              </div>
+              <h1 className="text-3xl font-bold tracking-tighter cool-logo mt-1">Instagram</h1>
+            </div>
+            <div className="xl:hidden flex justify-center cursor-pointer group relative" onClick={() => setActivePage('home')}>
+               <div className="absolute -inset-1 bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] rounded-xl blur opacity-70 group-hover:opacity-100 transition duration-300"></div>
+               <div className="relative bg-[var(--bg-primary)] p-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800">
+                  <Camera className="w-6 h-6 text-[#dc2743]" />
+               </div>
             </div>
           </div>
 
