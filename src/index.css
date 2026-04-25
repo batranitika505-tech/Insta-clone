@@ -5,36 +5,52 @@
 @layer base {
   :root {
     --bg-primary: #FFFFFF;
-    --bg-secondary: #FAFAFA;
-    --bg-card: #FFFFFF;
-    --border: #DBDBDB;
-    --text-primary: #000000;
-    --text-secondary: #737373;
+    --bg-secondary: #F8F9FA;
+    --bg-card: rgba(255, 255, 255, 0.8);
+    --border: rgba(0, 0, 0, 0.05);
+    --text-primary: #1A1A1A;
+    --text-secondary: #6B7280;
+    --accent: #FF3040;
     --ig-blue: #0095F6;
-    --ig-red: #FF3040;
-    --ig-story-gradient: conic-gradient(from 45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    --ig-story-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
   }
 
   .dark {
-    --bg-primary: #000000;
-    --bg-secondary: #121212;
-    --bg-card: #262626;
-    --border: #262626;
-    --text-primary: #FFFFFF;
-    --text-secondary: #A8A8A8;
+    --bg-primary: #050505;
+    --bg-secondary: #0A0A0A;
+    --bg-card: rgba(20, 20, 20, 0.7);
+    --border: rgba(255, 255, 255, 0.06);
+    --text-primary: #F3F4F6;
+    --text-secondary: #9CA3AF;
   }
 
   body {
-    @apply transition-colors duration-300 antialiased overflow-x-hidden;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    @apply transition-all duration-500 antialiased overflow-x-hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background-color: var(--bg-primary);
     color: var(--text-primary);
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(0, 149, 246, 0.03), transparent 40%),
+      radial-gradient(circle at 0% 100%, rgba(255, 48, 64, 0.02), transparent 40%);
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background-color: rgba(0, 149, 246, 0.2);
+    color: inherit;
+  }
+
+  /* Global Noise Overlay */
+  body::after {
+    content: "";
+    @apply fixed inset-0 pointer-events-none opacity-[0.03] z-[100];
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
 }
 
 @layer components {
   .nav-item {
-    @apply flex items-center gap-4 p-3 my-1 rounded-lg hover:bg-zinc-500/10 transition-all cursor-pointer;
+    @apply flex items-center gap-4 p-3 my-1 rounded-xl hover:bg-zinc-500/10 transition-all duration-300 cursor-pointer active:scale-95;
   }
 
   @keyframes spin-gradient {
@@ -43,8 +59,10 @@
   }
 
   .story-ring {
-    padding: 2px;
+    padding: 3px;
     border-radius: 9999px;
+    background: var(--ig-story-gradient);
+    @apply shadow-[0_0_15px_rgba(220,39,67,0.2)] transition-transform duration-300 hover:scale-105;
     background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
     transition: all 0.3s ease;
   }
@@ -54,19 +72,24 @@
   }
 
   .btn-follow {
-    @apply bg-[#0095f6] hover:bg-[#1877f2] text-white px-4 py-1.5 rounded-lg text-sm font-semibold transition-colors;
+    @apply relative overflow-hidden bg-instagram-blue hover:bg-blue-600 text-white px-5 py-2 rounded-xl text-sm font-bold transition-all duration-300 shadow-lg shadow-blue-500/20 active:scale-95;
+  }
+
+  .btn-follow::before {
+    content: "";
+    @apply absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888];
   }
 
   .btn-secondary {
-    @apply bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 text-black dark:text-white px-4 py-1.5 rounded-lg text-sm font-semibold transition-colors;
+    @apply bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-black dark:text-white px-5 py-2 rounded-xl text-sm font-bold transition-all duration-300 border border-transparent hover:border-black/5 dark:hover:border-white/5 active:scale-95;
   }
 
   .text-link {
-    @apply text-[#0095f6] hover:text-[#00376b] dark:hover:text-blue-400 text-sm font-semibold transition-colors cursor-pointer;
+    @apply text-instagram-blue hover:text-blue-600 dark:hover:text-blue-400 text-sm font-bold transition-colors cursor-pointer;
   }
 
   .card {
-    @apply bg-[var(--bg-card)] border border-[var(--border)] rounded-xl overflow-hidden;
+    @apply bg-[var(--bg-card)] backdrop-blur-3xl border border-[var(--border)] rounded-2xl shadow-xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-black/5 dark:hover:shadow-white/5;
   }
 
   .post-card-wrapper {
@@ -95,13 +118,17 @@
   }
 
   .reel-container {
-    @apply h-screen w-full snap-start relative overflow-hidden flex flex-col justify-end p-6;
+    @apply h-screen w-full snap-start relative overflow-hidden flex flex-col justify-end p-6 bg-black;
+  }
+
+  .input-field {
+    @apply w-full bg-zinc-100 dark:bg-zinc-900/50 rounded-xl py-3 px-4 outline-none border border-transparent focus:border-instagram-blue/30 focus:bg-white dark:focus:bg-black transition-all duration-300;
   }
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -109,7 +136,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-zinc-500/30 rounded-full hover:bg-zinc-500/50;
+  @apply bg-zinc-500/20 rounded-full hover:bg-zinc-500/40 transition-colors;
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -124,4 +151,14 @@
   scroll-snap-type: y mandatory;
   overflow-y: scroll;
   height: 100vh;
+}
+
+/* Base Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
 }
