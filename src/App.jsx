@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Home, Search, Compass, Film, MessageCircle, Heart, PlusSquare, 
   MoreHorizontal, Verified, Volume2, VolumeX, Bookmark, Share2, 
@@ -135,36 +136,50 @@ const PostCard = ({ post }) => {
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <div className="card mb-4 max-w-[470px] mx-auto transition-colors duration-300">
-      <div className="flex items-center justify-between px-4 py-3">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full overflow-hidden border border-zinc-200 dark:border-zinc-700">
-            <img src={post.user.avatar} className="w-full h-full object-cover" style={{ objectPosition: post.user.pos || 'center' }} />
+    <div className="card mb-6 max-w-[470px] mx-auto transition-all duration-500 hover:scale-[1.01]">
+      <div className="flex items-center justify-between px-4 py-4">
+        <div className="flex items-center gap-4 group cursor-pointer">
+          <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-transparent group-hover:border-ig-blue transition-all p-0.5">
+            <div className="w-full h-full rounded-full overflow-hidden">
+               <img src={post.user.avatar} className="w-full h-full object-cover" style={{ objectPosition: post.user.pos || 'center' }} />
+            </div>
           </div>
-          <span className="font-semibold text-sm">{post.user.username} {post.user.verified && <Verified className="inline w-3 h-3 text-blue-500" />}</span>
-          <span className="text-zinc-500 text-sm">• {post.timestamp}</span>
+          <div className="flex flex-col">
+            <span className="font-bold text-sm tracking-tight">{post.user.username} {post.user.verified && <Verified className="inline w-3 h-3 text-ig-blue ml-0.5" />}</span>
+            <span className="text-zinc-500 text-[10px] uppercase font-black tracking-widest">{post.timestamp} ago</span>
+          </div>
         </div>
-        <MoreHorizontal className="w-5 h-5 cursor-pointer" />
+        <button className="p-2 hover:bg-zinc-500/10 rounded-full transition-colors">
+          <MoreHorizontal className="w-5 h-5 text-zinc-500" />
+        </button>
       </div>
-      <div className="aspect-square bg-zinc-100 dark:bg-zinc-900 overflow-hidden">
-        <img src={post.image} className="w-full h-full object-cover"  style={{ objectPosition: post.imagePos || 'center' }} />
+      <div className="aspect-square bg-zinc-100 dark:bg-zinc-900 overflow-hidden relative group">
+        <img src={post.image} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"  style={{ objectPosition: post.imagePos || 'center' }} />
+        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
       </div>
-      <div className="px-4 py-3 space-y-2">
+      <div className="px-5 py-4 space-y-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Heart className={`w-7 h-7 cursor-pointer hover:scale-110 transition-transform ${isLiked ? 'text-red-500 fill-red-500' : ''}`} onClick={() => setIsLiked(!isLiked)} />
-            <MessageCircle className="w-7 h-7 cursor-pointer" />
-            <Send className="w-7 h-7 cursor-pointer" />
+          <div className="flex items-center gap-5">
+            <Heart className={`w-7 h-7 cursor-pointer hover:scale-125 transition-all ${isLiked ? 'text-accent fill-accent animate-bounce' : 'hover:text-zinc-400'}`} onClick={() => setIsLiked(!isLiked)} />
+            <MessageCircle className="w-7 h-7 cursor-pointer hover:scale-110 hover:text-zinc-400 transition-all" />
+            <Send className="w-7 h-7 cursor-pointer hover:scale-110 hover:text-zinc-400 transition-all" />
           </div>
-          <Bookmark className="w-7 h-7 cursor-pointer" />
+          <Bookmark className="w-7 h-7 cursor-pointer hover:scale-110 hover:text-zinc-400 transition-all" />
         </div>
-        <div className="text-sm">
-          <p className="font-semibold mb-1">{post.likes} likes</p>
-          <span className="font-semibold mr-2">{post.user.username}</span>
-          <span className={showMore ? "" : "line-clamp-1"}>{post.caption}</span>
-          {!showMore && <button onClick={() => setShowMore(true)} className="text-zinc-500 text-xs ml-1 hover:underline">more</button>}
+        <div className="text-sm space-y-1">
+          <p className="font-black tracking-tight">{post.likes} likes</p>
+          <div className="flex gap-2">
+            <span className="font-black">{post.user.username}</span>
+            <span className={`${showMore ? "" : "line-clamp-2"} text-zinc-700 dark:text-zinc-300`}>{post.caption}</span>
+          </div>
+          {!showMore && <button onClick={() => setShowMore(true)} className="text-zinc-500 text-xs font-bold hover:underline py-1">view all comments</button>}
         </div>
-        <input type="text" placeholder="Add a comment..." className="w-full bg-transparent border-t border-zinc-100 dark:border-zinc-800 pt-2 outline-none text-sm placeholder:text-zinc-500" />
+        <div className="pt-2 border-t border-zinc-100 dark:border-zinc-800/50 flex items-center gap-3">
+          <div className="w-6 h-6 rounded-full overflow-hidden opacity-50">
+             <img src={USER_PIC} className="w-full h-full object-cover" />
+          </div>
+          <input type="text" placeholder="Add a comment..." className="flex-grow bg-transparent outline-none text-sm placeholder:text-zinc-500 placeholder:font-medium" />
+        </div>
       </div>
     </div>
   );
@@ -178,29 +193,42 @@ const SearchPage = () => {
 
   if (selectedUser) {
     return (
-      <div className="max-w-[935px] mx-auto pt-8 px-4">
-        <button onClick={() => setSelectedUser(null)} className="mb-6 flex items-center gap-2 font-semibold hover:text-zinc-500 transition-colors">
-          <ArrowLeft className="w-5 h-5" /> Back
+      <div className="max-w-[935px] mx-auto pt-10 px-4 animate-fade-in">
+        <button onClick={() => setSelectedUser(null)} className="mb-8 flex items-center gap-3 font-bold text-sm tracking-widest uppercase hover:text-ig-blue transition-colors group">
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Search
         </button>
-        <div className="flex flex-col md:flex-row items-center gap-10 md:gap-20 mb-12 border-b border-zinc-200 dark:border-zinc-800 pb-10">
-          <img src={`https://i.pravatar.cc/150?u=${selectedUser.username}`} className="w-32 h-32 rounded-full border border-zinc-200 dark:border-zinc-800" />
-          <div className="space-y-4 text-center md:text-left">
-            <div className="flex items-center gap-4">
-               <h2 className="text-xl font-semibold">{selectedUser.username}</h2>
-               <button className="btn-secondary">Follow</button>
+        <div className="flex flex-col md:flex-row items-center gap-12 md:gap-20 mb-12 border-b border-zinc-200 dark:border-zinc-800 pb-12">
+          <div className="relative">
+            <img src={`https://i.pravatar.cc/150?u=${selectedUser.username}`} className="w-36 h-36 rounded-full border-4 border-[var(--bg-primary)] shadow-2xl" />
+            <div className="absolute inset-0 rounded-full border border-black/5 dark:border-white/5 pointer-events-none"></div>
+          </div>
+          <div className="space-y-6 text-center md:text-left flex-grow">
+            <div className="flex flex-col md:flex-row items-center gap-6">
+               <h2 className="text-3xl font-black italic tracking-tighter">{selectedUser.username}</h2>
+               <div className="flex gap-2">
+                 <button className="btn-follow px-8">Follow</button>
+                 <button className="btn-secondary px-6">Message</button>
+               </div>
             </div>
-            <div className="flex gap-8 justify-center md:justify-start">
-               <div><span className="font-bold">{selectedUser.posts}</span> posts</div>
-               <div><span className="font-bold">{selectedUser.followers}</span> followers</div>
-               <div><span className="font-bold">{selectedUser.following}</span> following</div>
+            <div className="flex gap-10 justify-center md:justify-start">
+               <div className="flex flex-col items-center md:items-start"><span className="font-black text-xl">{selectedUser.posts}</span> <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">posts</span></div>
+               <div className="flex flex-col items-center md:items-start"><span className="font-black text-xl">{selectedUser.followers}</span> <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">followers</span></div>
+               <div className="flex flex-col items-center md:items-start"><span className="font-black text-xl">{selectedUser.following}</span> <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">following</span></div>
             </div>
-            <p className="font-semibold">{selectedUser.bio}</p>
+            <div className="max-w-md">
+              <p className="font-bold text-lg mb-1">{selectedUser.username}</p>
+              <p className="text-zinc-500 font-medium leading-relaxed">{selectedUser.bio}</p>
+            </div>
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-1 md:gap-6 pb-20">
-          {[1,2,3].map(n => (
-            <div key={n} className="aspect-square bg-zinc-200 dark:bg-zinc-800 rounded-sm overflow-hidden">
-               <img src={`https://picsum.photos/300/300?random=${n + 50}`} className="w-full h-full object-cover hover:scale-105 transition-transform" />
+        <div className="grid grid-cols-3 gap-1 md:gap-8 pb-20">
+          {[1,2,3,4,5,6].map(n => (
+            <div key={n} className="aspect-square bg-zinc-200 dark:bg-zinc-800 rounded-2xl overflow-hidden group relative shadow-lg">
+               <img src={`https://picsum.photos/400/400?random=${n + 50}`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-6 text-white">
+                  <div className="flex items-center gap-2"><Heart className="w-6 h-6 fill-white" /> 84</div>
+                  <div className="flex items-center gap-2"><MessageCircle className="w-6 h-6 fill-white" /> 15</div>
+               </div>
             </div>
           ))}
         </div>
@@ -209,47 +237,56 @@ const SearchPage = () => {
   }
 
   return (
-    <div className="max-w-[600px] mx-auto pt-8 px-4 w-full h-screen flex flex-col">
-      <div className="relative mb-6">
+    <div className="max-w-[700px] mx-auto pt-10 px-4 w-full flex flex-col">
+      <div className="relative mb-10 group">
+        <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400 group-focus-within:text-ig-blue transition-colors" />
         <input 
           type="text" 
-          placeholder="Search" 
+          placeholder="Search creators, photos, styles..." 
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="w-full bg-zinc-100 dark:bg-zinc-800 rounded-lg py-2.5 pl-4 pr-10 outline-none focus:ring-1 focus:ring-zinc-400"
+          className="w-full bg-zinc-100 dark:bg-zinc-900 border-2 border-transparent focus:border-ig-blue/20 rounded-2xl py-4 pl-14 pr-12 outline-none shadow-sm focus:shadow-xl focus:shadow-ig-blue/5 transition-all text-lg font-medium"
         />
-        {query && <button onClick={() => setQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 text-xs bg-zinc-200 dark:bg-zinc-700 rounded-full px-1.5 py-0.5">X</button>}
+        {query && <button onClick={() => setQuery('')} className="absolute right-5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 bg-zinc-200 dark:bg-zinc-800 rounded-full p-1 transition-colors"><PlusSquare className="w-4 h-4 rotate-45" /></button>}
       </div>
 
       <div className="flex-grow overflow-y-auto no-scrollbar pb-10">
         {!query ? (
-          <div className="grid grid-cols-3 gap-1">
-            {[...Array(12)].map((_, i) => (
-               <div key={i} className="aspect-square overflow-hidden cursor-pointer group">
-                 <img src={`https://picsum.photos/300/300?random=${i + 100}`} className="w-full h-full object-cover group-hover:brightness-90" />
+          <div className="grid grid-cols-3 gap-3">
+            {[...Array(15)].map((_, i) => (
+               <div key={i} className="aspect-square overflow-hidden cursor-pointer group rounded-2xl shadow-md">
+                 <img src={`https://picsum.photos/400/400?random=${i + 100}`} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-125" />
+                 <div className="absolute inset-0 bg-ig-blue/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                </div>
             ))}
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {filteredUsers.length > 0 ? filteredUsers.map(user => (
               <div 
                 key={user.username} 
-                className="flex items-center justify-between p-4 bg-zinc-50 dark:bg-zinc-900 rounded-xl border border-zinc-100 dark:border-zinc-800 cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                className="flex items-center justify-between p-5 bg-white dark:bg-zinc-900/50 backdrop-blur-md rounded-2xl border border-zinc-100 dark:border-zinc-800/50 cursor-pointer hover:shadow-2xl hover:shadow-ig-blue/10 transition-all group"
                 onClick={() => setSelectedUser(user)}
               >
                 <div className="flex items-center gap-4">
-                   <img src={`https://i.pravatar.cc/150?u=${user.username}`} className="w-12 h-12 rounded-full border border-zinc-200 dark:border-zinc-700" />
+                   <div className="relative">
+                     <img src={`https://i.pravatar.cc/150?u=${user.username}`} className="w-14 h-14 rounded-full border-2 border-zinc-50 dark:border-zinc-800 group-hover:border-ig-blue transition-colors" />
+                     <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-ig-blue/10 rounded-full flex items-center justify-center backdrop-blur-sm">
+                        <CheckCircle2 className="w-3 h-3 text-ig-blue" />
+                     </div>
+                   </div>
                    <div>
-                     <div className="font-semibold text-sm">{user.username}</div>
-                     <div className="text-zinc-500 text-xs">{user.bio}</div>
-                     <div className="text-zinc-400 text-[10px] mt-0.5">{user.followers} followers • {user.posts} posts</div>
+                     <div className="font-black tracking-tight text-sm group-hover:text-ig-blue transition-colors">{user.username}</div>
+                     <div className="text-zinc-500 text-[10px] font-bold uppercase tracking-widest mt-1">{user.followers} followers</div>
                    </div>
                 </div>
                 <FollowButton />
               </div>
             )) : (
-              <div className="text-center py-20 text-zinc-500">No users found for "{query}"</div>
+              <div className="col-span-full text-center py-20">
+                <Search className="w-16 h-16 text-zinc-200 dark:text-zinc-800 mx-auto mb-4" />
+                <p className="text-zinc-500 font-bold uppercase tracking-widest text-xs">No creators matching "{query}"</p>
+              </div>
             )}
           </div>
         )}
@@ -263,7 +300,7 @@ const FollowButton = () => {
     return (
         <button 
             onClick={(e) => { e.stopPropagation(); setFollowing(!following); }} 
-            className={`${following ? 'btn-secondary' : 'btn-follow'} !px-3 !py-1 !text-xs`}
+            className={`${following ? 'btn-secondary' : 'btn-follow'} !px-4 !py-1.5 !text-[11px] !rounded-xl !uppercase !tracking-widest`}
         >
             {following ? 'Following' : 'Follow'}
         </button>
@@ -282,40 +319,53 @@ const ReelItem = ({ index }) => {
 
   return (
     <div className="reel-container" onClick={() => setIsPlaying(!isPlaying)}>
-      <img src={`https://picsum.photos/400/800?random=${index + 200}`} className="absolute inset-0 w-full h-full object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+      <img src={`https://picsum.photos/600/1200?random=${index + 200}`} className="absolute inset-0 w-full h-full object-cover opacity-80" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
       
-      {!isPlaying && <Play className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 text-white/50" />}
+      <AnimatePresence>
+        {!isPlaying && (
+          <motion.div initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 1.5, opacity: 0 }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+            <Play className="w-20 h-20 text-white/40 drop-shadow-2xl" />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      <div className="relative z-10 flex items-end justify-between w-full h-full max-w-[500px] mx-auto pb-4">
-         <div className="flex flex-col gap-2 p-4 text-white">
-            <div className="flex items-center gap-2">
-               <div className="w-8 h-8 rounded-full border-2 border-white overflow-hidden">
-                 <img src={`https://i.pravatar.cc/50?u=${index}`} className="w-full h-full object-cover" />
+      <div className="relative z-10 flex items-end justify-between w-full h-full max-w-[500px] mx-auto pb-10 px-4">
+         <div className="flex flex-col gap-4 p-4 text-white animate-fade-in">
+            <div className="flex items-center gap-3">
+               <div className="w-10 h-10 rounded-full border-2 border-white/50 p-0.5 group cursor-pointer hover:border-white transition-all overflow-hidden">
+                 <img src={`https://i.pravatar.cc/100?u=${index}`} className="w-full h-full rounded-full object-cover" />
                </div>
-               <span className="font-bold text-sm">user_{index + 100}</span>
-               <button className="border border-white/50 px-2 py-0.5 rounded-md text-xs hover:bg-white/10 transition-colors">Follow</button>
+               <span className="font-black text-sm tracking-tight shadow-sm">user_{index + 100}</span>
+               <button className="bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-white/20 transition-all">Follow</button>
             </div>
-            <p className="text-sm line-clamp-2">Awesome vibes today! 🌅✨ #nature #vibe #reel #trending</p>
-            <div className="flex items-center gap-2 text-xs opacity-90"><Monitor className="w-3 h-3" /> Original Audio - trending_waves</div>
+            <p className="text-sm font-medium leading-relaxed opacity-90 drop-shadow-lg">Cinematic vibes on the horizon. Explorations in minimalist motion. 🎥🎬 #motion #design #vibe</p>
+            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] opacity-70 bg-black/20 backdrop-blur-sm self-start px-3 py-1.5 rounded-full">
+              <Monitor className="w-3 h-3" /> Original Audio_HQ
+            </div>
          </div>
 
-         <div className="flex flex-col items-center gap-6 p-4">
-            <div className="flex flex-col items-center gap-1">
-               <Heart className={`w-8 h-8 cursor-pointer transition-colors ${liked ? 'text-red-500 fill-red-500' : 'text-white hover:text-red-400'}`} onClick={(e) => { e.stopPropagation(); setLiked(!liked); }} />
-               <span className="text-xs text-white font-semibold">{liked ? '4.9k' : '4.8k'}</span>
+         <div className="flex flex-col items-center gap-8 p-4 mb-2">
+            <div className="flex flex-col items-center gap-2 group">
+               <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center backdrop-blur-md group-hover:bg-white/10 transition-all cursor-pointer">
+                <Heart className={`w-7 h-7 transition-all ${liked ? 'text-accent fill-accent scale-110' : 'text-white hover:text-accent'}`} onClick={(e) => { e.stopPropagation(); setLiked(!liked); }} />
+               </div>
+               <span className="text-[10px] text-white font-black">{liked ? '12.5k' : '12.4k'}</span>
             </div>
-            <div className="flex flex-col items-center gap-1">
-               <MessageSquare className="w-8 h-8 text-white cursor-pointer hover:opacity-70" />
-               <span className="text-xs text-white font-semibold">124</span>
+            <div className="flex flex-col items-center gap-2 group">
+               <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center backdrop-blur-md group-hover:bg-white/10 transition-all cursor-pointer">
+                <MessageSquare className="w-7 h-7 text-white" />
+               </div>
+               <span className="text-[10px] text-white font-black">482</span>
             </div>
-            <div className="flex flex-col items-center gap-1">
-               <Send className="w-8 h-8 text-white cursor-pointer hover:opacity-70" />
-               <span className="text-xs text-white font-semibold">89</span>
+            <div className="flex flex-col items-center gap-2 group">
+               <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center backdrop-blur-md group-hover:bg-white/10 transition-all cursor-pointer">
+                <Send className="w-7 h-7 text-white" />
+               </div>
+               <span className="text-[10px] text-white font-black">2.1k</span>
             </div>
-            <MoreHorizontal className="w-6 h-6 text-white cursor-pointer" />
-            <div className="w-8 h-8 rounded-md border-2 border-white overflow-hidden">
-                <img src={`https://picsum.photos/50/50?random=${index}`} className="w-full h-full object-cover" />
+            <div className="w-10 h-10 rounded-xl border-2 border-white/30 overflow-hidden shadow-2xl hover:scale-110 transition-transform cursor-pointer">
+                <img src={`https://picsum.photos/100/100?random=${index}`} className="w-full h-full object-cover" />
             </div>
          </div>
       </div>
@@ -434,32 +484,34 @@ export default function App() {
 
   const renderContent = () => {
     switch(activePage) {
-      case 'home': return <HomeFeed isDark={isDark} />;
-      case 'search': return <SearchPage />;
-      case 'explore': return <ExplorePage />;
-      case 'reels': return <ReelsPage />;
-      case 'messages': return <MessagesPage />;
-      case 'notifications': return <NotificationsPage />;
-      case 'create': return <CreatePage />;
-      case 'profile': return <ProfilePage />;
-      default: return <HomeFeed isDark={isDark} />;
+      case 'home': return <div className="animate-fade-in"><HomeFeed isDark={isDark} /></div>;
+      case 'search': return <div className="animate-fade-in"><SearchPage /></div>;
+      case 'explore': return <div className="animate-fade-in"><ExplorePage /></div>;
+      case 'reels': return <div className="animate-fade-in"><ReelsPage /></div>;
+      case 'messages': return <div className="animate-fade-in"><MessagesPage /></div>;
+      case 'notifications': return <div className="animate-fade-in"><NotificationsPage /></div>;
+      case 'create': return <div className="animate-fade-in"><CreatePage /></div>;
+      case 'profile': return <div className="animate-fade-in"><ProfilePage /></div>;
+      default: return <div className="animate-fade-in"><HomeFeed isDark={isDark} /></div>;
     }
   };
 
   return (
-    <div className={`${isDark ? 'dark' : ''}`}>
-      <div className="flex min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300">
+    <div className={`${isDark ? 'dark' : ''} selection:bg-ig-blue/30`}>
+      <div className="flex min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-all duration-700">
         
         {/* Left Sidebar */}
-        <aside className="fixed left-0 top-0 h-screen w-[72px] xl:w-[245px] border-r border-[var(--border)] flex flex-col p-3 z-50 bg-[var(--bg-primary)] transition-all">
-          <div className="xl:px-3 mb-10 py-8">
-            <h1 className="hidden xl:block text-2xl font-bold tracking-tighter cursor-pointer select-none" onClick={() => setActivePage('home')}>Instagram</h1>
-            <div className="xl:hidden flex justify-center cursor-pointer" onClick={() => setActivePage('home')}>
-               <div className="w-7 h-7 bg-[var(--text-primary)] rounded-md"></div>
+        <aside className="fixed left-0 top-0 h-screen w-[72px] xl:w-[245px] border-r border-[var(--border)] flex flex-col p-4 z-50 bg-[var(--bg-primary)]/80 backdrop-blur-xl transition-all duration-500">
+          <div className="xl:px-4 mb-10 py-8">
+            <h1 className="hidden xl:block text-2xl font-black tracking-tighter cursor-pointer select-none bg-clip-text text-transparent bg-gradient-to-br from-[var(--text-primary)] to-zinc-500 hover:scale-105 transition-transform" onClick={() => setActivePage('home')}>
+              Instagram
+            </h1>
+            <div className="xl:hidden flex justify-center cursor-pointer transition-transform hover:scale-110" onClick={() => setActivePage('home')}>
+               <div className="w-8 h-8 bg-gradient-to-tr from-ig-blue via-purple-500 to-pink-500 rounded-lg shadow-lg"></div>
             </div>
           </div>
 
-          <nav className="flex-grow space-y-1">
+          <nav className="flex-grow space-y-2">
             <SideNavItem icon={Home} label="Home" active={activePage === 'home'} onClick={() => setActivePage('home')} />
             <SideNavItem icon={Search} label="Search" active={activePage === 'search'} onClick={() => setActivePage('search')} />
             <SideNavItem icon={Compass} label="Explore" active={activePage === 'explore'} onClick={() => setActivePage('explore')} />
@@ -467,23 +519,28 @@ export default function App() {
             <SideNavItem icon={MessageCircle} label="Messages" active={activePage === 'messages'} onClick={() => setActivePage('messages')} />
             <SideNavItem icon={Heart} label="Notifications" active={activePage === 'notifications'} onClick={() => setActivePage('notifications')} />
             <SideNavItem icon={PlusSquare} label="Create" active={activePage === 'create'} onClick={() => setActivePage('create')} />
-            <div onClick={() => setActivePage('profile')} className={`nav-item group cursor-pointer ${activePage === 'profile' ? 'font-bold' : ''}`}>
-               <div className={`w-6 h-6 rounded-full overflow-hidden border ${activePage === 'profile' ? 'border-[var(--text-primary)] border-2' : 'border-zinc-500'} transition-all`}>
+            <div onClick={() => setActivePage('profile')} className={`nav-item group cursor-pointer ${activePage === 'profile' ? 'bg-zinc-500/5' : ''}`}>
+               <div className={`w-6 h-6 rounded-full overflow-hidden border-2 ${activePage === 'profile' ? 'border-ig-blue shadow-[0_0_10px_rgba(0,149,246,0.5)]' : 'border-transparent'} transition-all duration-300 group-hover:scale-110`}>
                  <img src={USER_PIC} className="w-full h-full object-cover" />
                </div>
-               <span className="hidden xl:block">Profile</span>
+               <span className={`hidden xl:block ${activePage === 'profile' ? 'font-bold' : ''}`}>Profile</span>
             </div>
           </nav>
 
-          <div className="mt-auto space-y-2">
+          <div className="mt-auto space-y-2 pt-4 border-t border-[var(--border)]">
             <button 
               onClick={() => setIsDark(!isDark)}
-              className="nav-item w-full flex items-center gap-4 hover:bg-zinc-500/10 transition-colors"
+              className="nav-item w-full flex items-center gap-4 hover:bg-zinc-500/10 transition-all group"
             >
-              {isDark ? <Sun className="w-6 h-6 text-yellow-400" /> : <Moon className="w-6 h-6 text-indigo-600" />}
-              <span className="hidden xl:block">{isDark ? 'Light Mode' : 'Dark Mode'}</span>
+              <div className="relative w-6 h-6 flex items-center justify-center">
+                {isDark ? 
+                  <Sun className="w-6 h-6 text-yellow-400 animate-pulse group-hover:rotate-45 transition-transform" /> : 
+                  <Moon className="w-6 h-6 text-indigo-500 animate-pulse group-hover:-rotate-12 transition-transform" />
+                }
+              </div>
+              <span className="hidden xl:block font-medium">{isDark ? 'Light Appearance' : 'Dark Appearance'}</span>
             </button>
-            <SideNavItem icon={MoreHorizontal} label="More" active={false} />
+            <SideNavItem icon={MoreHorizontal} label="More Settings" active={false} />
           </div>
         </aside>
 
@@ -497,41 +554,46 @@ export default function App() {
 
             {/* Right Sidebar - Only on Home */}
             {activePage === 'home' && (
-              <aside className="hidden lg:block w-[320px] pt-12 px-6">
-                <div className="flex items-center justify-between mb-8">
+              <aside className="hidden lg:block w-[320px] pt-12 px-8">
+                <div className="flex items-center justify-between mb-8 p-3 rounded-2xl hover:bg-zinc-500/5 transition-colors group cursor-pointer">
                   <div className="flex items-center gap-4">
-                    <img src={USER_PIC} className="w-11 h-11 rounded-full border border-zinc-200 dark:border-zinc-800" />
+                    <div className="relative">
+                      <img src={USER_PIC} className="w-12 h-12 rounded-full border border-zinc-200 dark:border-zinc-800 p-0.5" />
+                      <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-[var(--bg-primary)] rounded-full"></div>
+                    </div>
                     <div className="text-sm">
-                      <p className="font-semibold">itsamreshanand</p>
-                      <p className="text-zinc-500">newton schol of technology</p>
+                      <p className="font-bold tracking-tight">itsamreshanand</p>
+                      <p className="text-zinc-500 text-xs font-medium">Newton School of Tech</p>
                     </div>
                   </div>
-                  <button className="text-link">Switch</button>
+                  <button className="text-ig-blue text-xs font-bold hover:text-blue-700 transition-colors">Switch</button>
                 </div>
 
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-zinc-500 font-semibold text-sm">Suggested for you</span>
-                  <button className="text-[var(--text-primary)] text-xs font-semibold">See All</button>
+                <div className="flex items-center justify-between mb-6 px-3">
+                  <span className="text-zinc-500 font-bold text-sm tracking-tight">Suggested for you</span>
+                  <button className="text-[var(--text-primary)] text-xs font-bold hover:opacity-70 transition-opacity">See All</button>
                 </div>
 
-                <div className="space-y-4 mb-10">
+                <div className="space-y-2 mb-10">
                   {SUGGESTIONS.map(s => (
-                    <div key={s.id} className="flex items-center justify-between">
-                       <div className="flex items-center gap-3">
-                          <img src={s.avatar} className="w-8 h-8 rounded-full" style={{ objectPosition: s.pos || 'center' }} />
+                    <div key={s.id} className="flex items-center justify-between p-3 rounded-xl hover:bg-zinc-500/5 transition-all group">
+                       <div className="flex items-center gap-4">
+                          <img src={s.avatar} className="w-9 h-9 rounded-full border border-zinc-100 dark:border-zinc-800" style={{ objectPosition: s.pos || 'center' }} />
                           <div className="text-xs">
-                             <p className="font-semibold">{s.username}</p>
-                             <p className="text-zinc-500 truncate w-32">{s.mutual}</p>
+                             <p className="font-bold group-hover:text-ig-blue transition-colors">{s.username}</p>
+                             <p className="text-zinc-500 truncate w-32 font-medium">{s.mutual}</p>
                           </div>
                        </div>
-                       <button className="text-link text-xs">Follow</button>
+                       <button className="text-ig-blue text-xs font-bold hover:text-blue-700">Follow</button>
                     </div>
                   ))}
                 </div>
 
-                <footer className="text-[11px] text-zinc-500 space-y-4">
-                   <p className="flex flex-wrap gap-x-1 uppercase">About • Help • Press • API • Jobs • Privacy • Terms • Locations • Language • Meta Verified</p>
-                   <p className="uppercase tracking-widest">© 2026 INSTAGRAM FROM META</p>
+                <footer className="px-3">
+                   <div className="text-[11px] text-zinc-500/60 uppercase tracking-widest font-bold leading-relaxed">
+                      About • Help • Press • API • Jobs • Privacy • Terms • Locations • Language • Meta Verified
+                   </div>
+                   <p className="text-[10px] text-zinc-500/40 uppercase tracking-[0.2em] mt-6 font-black">© 2026 INSTAGRAM FROM META</p>
                 </footer>
               </aside>
             )}
