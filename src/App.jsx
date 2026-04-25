@@ -69,6 +69,15 @@ const POSTS = [
   }
 ];
 
+const MOCK_USERS = [
+  { username: 'nitika',   bio: 'Photography lover 📸', posts: '240', followers: '12.4k', following: '540',  seed: 10 },
+  { username: 'amresh',   bio: 'Coder by day 💻',      posts: '85',  followers: '4.2k',  following: '210',  seed: 20 },
+  { username: 'shravani', bio: 'Dance is life 💃',      posts: '310', followers: '28k',   following: '1.2k', seed: 30 },
+  { username: 'rahul',    bio: 'Fitness freak 💪',      posts: '200', followers: '8k',    following: '450',  seed: 40 },
+  { username: 'zeeshan',  bio: 'Tech enthusiast 🚀',   posts: '90',  followers: '3.5k',  following: '200',  seed: 50 },
+  { username: 'mayuri',   bio: 'Fashion & Lifestyle ✨', posts: '150', followers: '15k',   following: '300',  seed: 60 },
+];
+
 const SUGGESTIONS = [
   { id: 1, username: "cristiano", avatar: "https://i.pravatar.cc/100?u=cr7", mutual: "Followed by nasa + 12 others", pos: "top" },
   { id: 2, username: "leomessi", avatar: "https://i.pravatar.cc/100?u=messi", mutual: "Followed by nature + 5 others" },
@@ -287,36 +296,124 @@ const ExplorePage = () => (
   </div>
 );
 
+const FollowButton = () => {
+  const [following, setFollowing] = useState(false);
+  return (
+    <button
+      onClick={(e) => { e.stopPropagation(); setFollowing(!following); }}
+      className={`${following ? 'bg-zinc-200 dark:bg-zinc-800 text-[var(--text-primary)] hover:bg-zinc-300 dark:hover:bg-zinc-700' : 'bg-[#0095f6] hover:bg-[#1877f2] text-white'} px-5 py-1.5 rounded-lg text-sm font-semibold transition-colors`}
+    >
+      {following ? 'Following' : 'Follow'}
+    </button>
+  );
+};
+
 const SearchPage = () => {
-    const [query, setQuery] = useState('');
+  const [query, setQuery] = useState('');
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const filteredUsers = MOCK_USERS.filter(u =>
+    u.username.toLowerCase().includes(query.toLowerCase())
+  );
+
+  if (selectedUser) {
     return (
-        <div className="max-w-[700px] mx-auto pt-10 px-4 w-full flex flex-col min-h-screen">
-            <div className="relative mb-12 group">
-                <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400 group-focus-within:text-instagram-blue transition-colors" />
-                <input 
-                    type="text" 
-                    placeholder="Search creators, photos, styles..." 
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    className="w-full bg-zinc-100 dark:bg-zinc-900/50 border-2 border-transparent focus:border-instagram-blue/20 rounded-3xl py-4.5 pl-16 pr-12 outline-none shadow-sm focus:shadow-2xl focus:shadow-instagram-blue/5 transition-all text-lg font-bold"
-                />
+      <div className="max-w-[935px] mx-auto pt-8 px-4 pb-20">
+        <button
+          onClick={() => setSelectedUser(null)}
+          className="mb-8 flex items-center gap-2 font-semibold text-sm hover:text-zinc-500 transition-colors"
+        >
+          <ArrowLeft className="w-5 h-5" /> Back to Search
+        </button>
+        <div className="flex flex-col md:flex-row items-center gap-10 md:gap-20 mb-10 pb-10 border-b border-zinc-200 dark:border-zinc-800">
+          <img
+            src={`https://i.pravatar.cc/200?u=${selectedUser.username}`}
+            className="w-36 h-36 rounded-full border-2 border-zinc-200 dark:border-zinc-800 shadow-xl flex-shrink-0"
+          />
+          <div className="space-y-4 text-center md:text-left">
+            <div className="flex items-center gap-4 justify-center md:justify-start">
+              <h2 className="text-2xl font-bold">{selectedUser.username}</h2>
+              <button className="bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 text-[var(--text-primary)] px-5 py-1.5 rounded-lg text-sm font-semibold transition-colors">Follow</button>
             </div>
-            {!query ? (
-                <div className="grid grid-cols-3 gap-3">
-                    {[...Array(12)].map((_, i) => (
-                        <div key={i} className="aspect-square rounded-2xl overflow-hidden cursor-pointer group shadow-lg">
-                            <img src={`https://picsum.photos/400/400?random=${i + 150}`} className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-125" />
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                <div className="py-20 text-center space-y-4 opacity-50">
-                    <Search className="w-16 h-16 mx-auto mb-4" />
-                    <p className="font-black uppercase tracking-[0.2em] text-xs">Exploring "{query}" ...</p>
-                </div>
-            )}
+            <div className="flex gap-8 justify-center md:justify-start text-sm">
+              <div><span className="font-bold">{selectedUser.posts}</span> posts</div>
+              <div><span className="font-bold">{selectedUser.followers}</span> followers</div>
+              <div><span className="font-bold">{selectedUser.following}</span> following</div>
+            </div>
+            <p className="text-sm">{selectedUser.bio}</p>
+          </div>
         </div>
+        <div className="grid grid-cols-3 gap-1 md:gap-4">
+          {[1, 2, 3].map(n => (
+            <div key={n} className="aspect-square overflow-hidden rounded-sm cursor-pointer group">
+              <img
+                src={`https://picsum.photos/400/400?random=${selectedUser.seed + n}`}
+                className="w-full h-full object-cover group-hover:brightness-90 group-hover:scale-105 transition-all duration-500"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
     );
+  }
+
+  return (
+    <div className="max-w-[700px] mx-auto pt-10 px-4 w-full flex flex-col min-h-screen">
+      <div className="relative mb-8 group">
+        <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400 group-focus-within:text-[#0095f6] transition-colors" />
+        <input
+          type="text"
+          placeholder="Search people..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="w-full bg-zinc-100 dark:bg-zinc-900/70 rounded-2xl py-3 pl-14 pr-10 outline-none border border-zinc-200 dark:border-zinc-800 focus:border-[#0095f6]/40 transition-all text-sm font-semibold"
+        />
+        {query && (
+          <button onClick={() => setQuery('')} className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 text-xs bg-zinc-300 dark:bg-zinc-700 rounded-full px-1.5 py-0.5">✕</button>
+        )}
+      </div>
+
+      <div className="flex-grow overflow-y-auto no-scrollbar pb-10">
+        {!query ? (
+          <div className="grid grid-cols-3 gap-1">
+            {[...Array(12)].map((_, i) => (
+              <div key={i} className="aspect-square overflow-hidden cursor-pointer group rounded-sm">
+                <img src={`https://picsum.photos/400/400?random=${i + 150}`} className="w-full h-full object-cover group-hover:scale-105 group-hover:brightness-90 transition-all duration-500" />
+              </div>
+            ))}
+          </div>
+        ) : filteredUsers.length > 0 ? (
+          <div className="space-y-3">
+            {filteredUsers.map(user => (
+              <div
+                key={user.username}
+                onClick={() => setSelectedUser(user)}
+                className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 cursor-pointer hover:shadow-xl hover:border-[#0095f6]/20 transition-all group"
+              >
+                <div className="flex items-center gap-4">
+                  <img
+                    src={`https://i.pravatar.cc/150?u=${user.username}`}
+                    className="w-14 h-14 rounded-full border border-zinc-200 dark:border-zinc-700 group-hover:scale-105 transition-transform"
+                  />
+                  <div>
+                    <p className="font-bold text-sm group-hover:text-[#0095f6] transition-colors">{user.username}</p>
+                    <p className="text-zinc-500 text-xs mt-0.5">{user.bio}</p>
+                    <p className="text-zinc-400 text-[11px] mt-1">{user.followers} followers · {user.posts} posts</p>
+                  </div>
+                </div>
+                <FollowButton />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="py-24 text-center opacity-50 space-y-3">
+            <Search className="w-12 h-12 mx-auto" />
+            <p className="font-bold text-sm">No results for "{query}"</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 const ReelsPage = () => (
