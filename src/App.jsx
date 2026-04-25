@@ -160,7 +160,7 @@ const PostCard = ({ post }) => {
       <div className="px-5 py-4 space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-5">
-            <Heart className={`w-7 h-7 cursor-pointer hover:scale-125 transition-all ${isLiked ? 'text-accent fill-accent animate-bounce' : 'hover:text-zinc-400'}`} onClick={() => setIsLiked(!isLiked)} />
+            <Heart className={`w-7 h-7 cursor-pointer hover:scale-125 transition-all ${isLiked ? 'text-instagram-red fill-instagram-red animate-bounce' : 'hover:text-zinc-400'}`} onClick={() => setIsLiked(!isLiked)} />
             <MessageCircle className="w-7 h-7 cursor-pointer hover:scale-110 hover:text-zinc-400 transition-all" />
             <Send className="w-7 h-7 cursor-pointer hover:scale-110 hover:text-zinc-400 transition-all" />
           </div>
@@ -348,7 +348,7 @@ const ReelItem = ({ index }) => {
          <div className="flex flex-col items-center gap-8 p-4 mb-2">
             <div className="flex flex-col items-center gap-2 group">
                <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center backdrop-blur-md group-hover:bg-white/10 transition-all cursor-pointer">
-                <Heart className={`w-7 h-7 transition-all ${liked ? 'text-accent fill-accent scale-110' : 'text-white hover:text-accent'}`} onClick={(e) => { e.stopPropagation(); setLiked(!liked); }} />
+                <Heart className={`w-7 h-7 transition-all ${liked ? 'text-instagram-red fill-instagram-red scale-110' : 'text-white hover:text-instagram-red'}`} onClick={(e) => { e.stopPropagation(); setLiked(!liked); }} />
                </div>
                <span className="text-[10px] text-white font-black">{liked ? '12.5k' : '12.4k'}</span>
             </div>
@@ -497,7 +497,7 @@ export default function App() {
   };
 
   return (
-    <div className={`${isDark ? 'dark' : ''} selection:bg-ig-blue/30`}>
+    <div className={`${isDark ? 'dark' : ''} selection:bg-instagram-blue/30`}>
       <div className="flex min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-all duration-700">
         
         {/* Left Sidebar */}
@@ -507,7 +507,7 @@ export default function App() {
               Instagram
             </h1>
             <div className="xl:hidden flex justify-center cursor-pointer transition-transform hover:scale-110" onClick={() => setActivePage('home')}>
-               <div className="w-8 h-8 bg-gradient-to-tr from-ig-blue via-purple-500 to-pink-500 rounded-lg shadow-lg"></div>
+               <div className="w-8 h-8 bg-gradient-to-tr from-instagram-blue via-purple-500 to-pink-500 rounded-lg shadow-lg"></div>
             </div>
           </div>
 
@@ -520,7 +520,7 @@ export default function App() {
             <SideNavItem icon={Heart} label="Notifications" active={activePage === 'notifications'} onClick={() => setActivePage('notifications')} />
             <SideNavItem icon={PlusSquare} label="Create" active={activePage === 'create'} onClick={() => setActivePage('create')} />
             <div onClick={() => setActivePage('profile')} className={`nav-item group cursor-pointer ${activePage === 'profile' ? 'bg-zinc-500/5' : ''}`}>
-               <div className={`w-6 h-6 rounded-full overflow-hidden border-2 ${activePage === 'profile' ? 'border-ig-blue shadow-[0_0_10px_rgba(0,149,246,0.5)]' : 'border-transparent'} transition-all duration-300 group-hover:scale-110`}>
+               <div className={`w-6 h-6 rounded-full overflow-hidden border-2 ${activePage === 'profile' ? 'border-instagram-blue shadow-[0_0_10px_rgba(0,149,246,0.5)]' : 'border-transparent'} transition-all duration-300 group-hover:scale-110`}>
                  <img src={USER_PIC} className="w-full h-full object-cover" />
                </div>
                <span className={`hidden xl:block ${activePage === 'profile' ? 'font-bold' : ''}`}>Profile</span>
