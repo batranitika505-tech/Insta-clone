@@ -4,7 +4,8 @@ import {
   Home, Search, Compass, Film, MessageCircle, Heart, PlusSquare, 
   MoreHorizontal, Verified, Volume2, VolumeX, Bookmark, Share2, 
   MessageSquare, User, Settings, Grid, Monitor, Tag, Image as ImageIcon,
-  Send, Camera, Info, CheckCircle2, Moon, Sun, ArrowLeft, Play, Pause
+  Send, Camera, Info, CheckCircle2, Moon, Sun, ArrowLeft, Play, Pause,
+  Instagram, LayoutGrid
 } from 'lucide-react';
 
 // --- MOCK DATA ---
@@ -503,11 +504,11 @@ export default function App() {
         {/* Left Sidebar */}
         <aside className="fixed left-0 top-0 h-screen w-[72px] xl:w-[245px] border-r border-[var(--border)] flex flex-col p-4 z-50 bg-[var(--bg-primary)]/80 backdrop-blur-xl transition-all duration-500">
           <div className="xl:px-4 mb-10 py-8">
-            <h1 className="hidden xl:block text-2xl font-black tracking-tighter cursor-pointer select-none bg-clip-text text-transparent bg-gradient-to-br from-[var(--text-primary)] to-zinc-500 hover:scale-105 transition-transform" onClick={() => setActivePage('home')}>
-              Instagram
-            </h1>
-            <div className="xl:hidden flex justify-center cursor-pointer transition-transform hover:scale-110" onClick={() => setActivePage('home')}>
-               <div className="w-8 h-8 bg-gradient-to-tr from-instagram-blue via-purple-500 to-pink-500 rounded-lg shadow-lg"></div>
+            <div className="flex items-center gap-3 cursor-pointer group" onClick={() => setActivePage('home')}>
+                <Instagram className="w-8 h-8 text-white p-1.5 rounded-xl bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] shadow-lg group-hover:scale-110 transition-transform" />
+                <h1 className="hidden xl:block text-2xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] group-hover:opacity-80 transition-opacity">
+                  Instagram
+                </h1>
             </div>
           </div>
 

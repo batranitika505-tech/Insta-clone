@@ -61,7 +61,12 @@
   }
 
   .btn-follow {
-    @apply bg-instagram-blue hover:bg-blue-600 text-white px-5 py-2 rounded-xl text-sm font-bold transition-all duration-300 shadow-lg shadow-blue-500/20 active:scale-95;
+    @apply relative overflow-hidden bg-instagram-blue hover:bg-blue-600 text-white px-5 py-2 rounded-xl text-sm font-bold transition-all duration-300 shadow-lg shadow-blue-500/20 active:scale-95;
+  }
+
+  .btn-follow::before {
+    content: "";
+    @apply absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888];
   }
 
   .btn-secondary {
