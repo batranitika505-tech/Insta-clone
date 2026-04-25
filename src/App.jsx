@@ -13,30 +13,59 @@ const USER_PIC = "https://avatars.githubusercontent.com/u/108920197?v=4";
 
 const STORIES = [
   { id: 1, username: "Your Story", img: USER_PIC, unseen: true, isUser: true },
-  { id: 2, username: "nasa", img: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=200", unseen: true },
-  { id: 3, username: "nature", img: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=200", unseen: true },
-  { id: 4, username: "tech_insider", img: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=200", unseen: false },
-  { id: 5, username: "explore_more", img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=200", unseen: true },
-  { id: 6, username: "artist_hub", img: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=200", unseen: false },
-  { id: 7, username: "fitness_pro", img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=200", unseen: true },
+  { id: 2, username: "nasa", img: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&q=80&w=200", unseen: true },
+  { id: 3, username: "nature", img: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=200", unseen: true },
+  { id: 4, username: "tech_insider", img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=200", unseen: false },
+  { id: 5, username: "explore_more", img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&q=80&w=200", unseen: true },
+  { id: 6, username: "artist_hub", img: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=200", unseen: false },
+  { id: 7, username: "fitness_pro", img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=200", unseen: true },
 ];
 
 const POSTS = [
   {
     id: 1,
-    user: { username: "nasa", avatar: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=100", verified: true },
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800",
+    user: { username: "nasa", avatar: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&q=80&w=100", verified: true },
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=100&w=1080",
     likes: "124,532",
     caption: "A breathtaking view of our home planet from the International Space Station. Darkness and light dance across the globe. 🌍✨",
     timestamp: "2h",
+    ratio: "aspect-[4/5]"
   },
   {
     id: 2,
-    user: { username: "nature", avatar: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=100" },
-    image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800",
+    user: { username: "nature", avatar: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=100" },
+    image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&q=100&w=1080",
     likes: "85,210",
     caption: "The morning mist rolling over the mountains is a sight to behold. Mother nature never ceases to amaze. 🏔️💨",
     timestamp: "4h",
+    ratio: "aspect-square"
+  },
+  {
+    id: 3,
+    user: { username: "explore_more", avatar: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&q=80&w=100" },
+    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&q=100&w=1080",
+    likes: "42,105",
+    caption: "Wanderlust is a powerful thing. There's so much beauty in the world waiting to be discovered. 🌲✨",
+    timestamp: "6h",
+    ratio: "aspect-[4/5]"
+  },
+  {
+    id: 4,
+    user: { username: "tech_insider", avatar: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=100" },
+    image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=100&w=1080",
+    likes: "18,942",
+    caption: "The future is build one line of code at a time. Minimalist workstation vibes. 💻⚡",
+    timestamp: "8h",
+    ratio: "aspect-square"
+  },
+  {
+    id: 5,
+    user: { username: "artist_hub", avatar: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=100" },
+    image: "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?auto=format&fit=crop&q=100&w=1080",
+    likes: "31,200",
+    caption: "Abstract thoughts captured in vibrant colors. Art is the language of the soul. 🎨💫",
+    timestamp: "12h",
+    ratio: "aspect-[4/5]"
   }
 ];
 
@@ -58,9 +87,7 @@ const CHATS = [
 const SideNavItem = ({ icon: Icon, label, active, onClick }) => (
   <div 
     onClick={onClick}
-
     className={`nav-item group ${active ? 'bg-zinc-500/5' : ''}`}
-    className={`nav-item group transition-all duration-200 ${active ? 'font-bold active-nav-item' : 'font-normal opacity-80 hover:opacity-100'}`}
   >
     <div className="relative">
       <Icon className={`w-7 h-7 transition-all duration-300 ${active ? 'scale-110 text-instagram-blue' : 'group-hover:scale-110 group-active:scale-95'}`} />
@@ -98,22 +125,6 @@ const StoryViewer = ({ story, onClose }) => {
       <div className="absolute top-8 left-8 right-8 flex gap-1 z-10">
         <div className="flex-grow h-0.5 bg-white/20 rounded-full overflow-hidden">
           <div className="h-full bg-white" style={{ width: `${progress}%` }} />
-const HomeFeed = ({ isDark }) => (
-  <section className="flex-grow max-w-[630px] pt-8 px-4 pb-10 mx-auto">
-    <div className="flex gap-4 mb-8 overflow-x-auto no-scrollbar py-2">
-      {STORIES.map(story => (
-        <div key={story.id} className="flex flex-col items-center gap-1 cursor-pointer flex-shrink-0">
-          <div className={`relative ${story.unseen ? 'story-ring' : 'p-[2px] bg-zinc-300 dark:bg-zinc-600 rounded-full'}`}>
-            <div className="w-[66px] h-[66px] rounded-full border-2 border-[var(--bg-primary)] overflow-hidden bg-zinc-200 dark:bg-zinc-800">
-              <img src={story.img} alt={story.username} className="w-full h-full object-cover" style={{ objectPosition: story.pos || 'center' }} />
-            </div>
-            {story.isUser && (
-              <div className="absolute bottom-0 right-0 bg-blue-500 border-2 border-[var(--bg-primary)] rounded-full p-0.5 translate-x-1 translate-y-1">
-                <PlusSquare className="w-4 h-4 text-white fill-white" />
-              </div>
-            )}
-          </div>
-          <span className="text-[12px] truncate w-20 text-center text-zinc-500 dark:text-zinc-400">{story.username}</span>
         </div>
       </div>
       
@@ -175,41 +186,32 @@ const HomeFeed = ({ isDark }) => {
             <span className={`text-[11px] font-black uppercase tracking-widest truncate w-[70px] text-center ${story.unseen ? 'text-[var(--text-primary)]' : 'text-zinc-500 opacity-60'}`}>
               {story.username.slice(0, 8)}..
             </span>
-    <div className="post-card-wrapper mb-4 max-w-[470px] mx-auto p-[1px] rounded-[12px] transition-all duration-300 group">
-      <div className="card border-none bg-[var(--bg-card)] rounded-[11px] overflow-hidden w-full h-full transition-colors duration-300">
-        <div className="flex items-center justify-between px-4 py-3">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full overflow-hidden border border-zinc-200 dark:border-zinc-700">
-            <img src={post.user.avatar} className="w-full h-full object-cover" style={{ objectPosition: post.user.pos || 'center' }} />
-
           </div>
         ))}
       </div>
       <div className="flex flex-col gap-10">
         {POSTS.map(post => <PostCard key={post.id} post={post} />)}
       </div>
-
     </section>
-      </div>
-    </div>
   );
 };
 
 const PostCard = ({ post }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [showMore, setShowMore] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   return (
-    <div className="card mb-2 max-w-[470px] mx-auto transition-all duration-500 hover:shadow-2xl hover:shadow-black/10 dark:hover:shadow-white/5">
-      <div className="flex items-center justify-between px-5 py-4">
+    <div className="card mb-6 max-w-[475px] mx-auto transition-all duration-700 hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_20px_50px_rgba(255,255,255,0.03)] group/card">
+      <div className="flex items-center justify-between px-5 py-4 border-b border-border/5">
         <div className="flex items-center gap-4 group cursor-pointer">
           <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-transparent group-hover:border-instagram-blue transition-all p-0.5 shadow-sm">
-            <div className="w-full h-full rounded-full overflow-hidden">
-               <img src={post.user.avatar} className="w-full h-full object-cover" />
+            <div className="w-full h-full rounded-full overflow-hidden bg-zinc-200 dark:bg-zinc-800">
+               <img src={post.user.avatar} className="w-full h-full object-cover" loading="lazy" />
             </div>
           </div>
           <div className="flex flex-col">
-            <span className="font-black text-sm tracking-tight flex items-center gap-1.5">{post.user.username} {post.user.verified && <Verified className="w-3.5 h-3.5 text-instagram-blue fill-instagram-blue p-0.5 bg-white rounded-full translate-y-[-1px]" />}</span>
+            <span className="font-black text-sm tracking-tight flex items-center gap-1.5">{post.user.username} {post.user.verified && <Verified className="w-3.5 h-3.5 text-instagram-blue fill-instagram-blue p-0.5 bg-white rounded-full" />}</span>
             <span className="text-zinc-500 text-[10px] uppercase font-black tracking-widest leading-none mt-0.5">{post.timestamp} ago</span>
           </div>
         </div>
@@ -218,12 +220,18 @@ const PostCard = ({ post }) => {
         </button>
       </div>
       
-      <div className="aspect-square bg-zinc-100 dark:bg-zinc-900 overflow-hidden relative group">
-        <img src={post.image} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
-        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+      <div className={`relative overflow-hidden bg-zinc-100 dark:bg-zinc-900 ${post.ratio || 'aspect-square'}`}>
+        {!imgLoaded && <div className="absolute inset-0 bg-gradient-to-r from-transparent via-zinc-200/20 to-transparent animate-scanning" />}
+        <img 
+          src={post.image} 
+          className={`w-full h-full object-cover transition-all duration-1000 ${imgLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'} group-hover/card:scale-105`}
+          onLoad={() => setImgLoaded(true)}
+          loading="lazy"
+        />
+        <div className="absolute inset-0 pointer-events-none border-[12px] border-white/5 opacity-0 group-hover/card:opacity-100 transition-opacity duration-700" />
       </div>
 
-      <div className="px-6 py-5 space-y-4">
+      <div className="px-6 py-5 space-y-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-6">
             <motion.button whileTap={{ scale: 1.5 }} onClick={() => setIsLiked(!isLiked)}>
@@ -238,16 +246,16 @@ const PostCard = ({ post }) => {
           <p className="font-black tracking-tight text-base italic">{post.likes} likes</p>
           <div className="flex gap-2 leading-relaxed">
             <span className="font-black italic">{post.user.username}</span>
-            <span className={`${showMore ? "" : "line-clamp-2"} text-zinc-700 dark:text-zinc-300 font-medium`}>{post.caption}</span>
+            <span className={`${showMore ? "" : "line-clamp-2"} text-zinc-700 dark:text-zinc-300 font-bold opacity-90`}>{post.caption}</span>
           </div>
-          {!showMore && <button onClick={() => setShowMore(true)} className="text-zinc-500 text-[11px] font-black uppercase tracking-widest hover:text-instagram-blue py-1">View Archive Comments</button>}
+          {!showMore && <button onClick={() => setShowMore(true)} className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.2em] hover:text-instagram-blue py-1 transition-colors">Read Full Description</button>}
         </div>
-        <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800/50 flex items-center gap-4">
-          <div className="w-7 h-7 rounded-full overflow-hidden opacity-40 hover:opacity-100 transition-opacity">
+        <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800/30 flex items-center gap-4">
+          <div className="w-8 h-8 rounded-full overflow-hidden opacity-40 hover:opacity-100 transition-opacity">
              <img src={USER_PIC} className="w-full h-full object-cover" />
           </div>
-          <input type="text" placeholder="Add a comment..." className="flex-grow bg-transparent outline-none text-sm placeholder:text-zinc-500 placeholder:font-black placeholder:uppercase placeholder:tracking-widest" />
-          <button className="text-instagram-blue text-xs font-black uppercase tracking-widest opacity-0 hover:opacity-100 transition-opacity pr-2">Post</button>
+          <input type="text" placeholder="WRITE A THOUGHT..." className="flex-grow bg-transparent outline-none text-[10px] font-black uppercase tracking-[0.2em] placeholder:text-zinc-400" />
+          <button className="text-instagram-blue text-[10px] font-black uppercase tracking-[0.2em] opacity-30 hover:opacity-100 transition-opacity pr-2">Share</button>
         </div>
       </div>
     </div>
@@ -313,9 +321,9 @@ const SearchPage = () => {
 
 const ReelsPage = () => (
     <div className="snap-y-container no-scrollbar bg-black h-screen overflow-y-scroll">
-      {[...Array(6)].map((_, i) => (
+      {[...Array(12)].map((_, i) => (
           <div key={i} className="h-screen w-full snap-start relative flex flex-col justify-end p-8 bg-zinc-900 border-b border-white/5">
-              <img src={`https://picsum.photos/600/1200?random=${i + 800}`} className="absolute inset-0 w-full h-full object-cover opacity-60" />
+              <img src={`https://picsum.photos/600/1200?random=${i + 850}`} className="absolute inset-0 w-full h-full object-cover opacity-60" />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
               
               <div className="relative z-10 flex items-end justify-between max-w-[500px] mx-auto w-full pb-10">
@@ -499,7 +507,6 @@ export default function App() {
       <div className="flex min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-all duration-700">
         
         {/* Left Sidebar */}
-
         <aside className="fixed left-0 top-0 h-screen w-[72px] xl:w-[245px] border-r border-[var(--border)] flex flex-col p-4 z-50 bg-[var(--bg-primary)]/80 backdrop-blur-xl transition-all duration-500">
           <div className="xl:px-4 mb-10 py-8">
             <div className="flex items-center gap-3 cursor-pointer group" onClick={() => setActivePage('home')}>
@@ -507,6 +514,8 @@ export default function App() {
                 <h1 className="hidden xl:block text-2xl font-black italic tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] group-hover:opacity-80 transition-opacity">
                   Instagram
                 </h1>
+
+
 
         <aside className="fixed left-0 top-0 h-screen w-[72px] xl:w-[245px] border-r border-[var(--border)] flex flex-col p-3 z-50 bg-[var(--bg-primary)] transition-all">
           <div className="xl:px-3 mb-10 py-8">
