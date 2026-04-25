@@ -37,10 +37,20 @@
     @apply flex items-center gap-4 p-3 my-1 rounded-lg hover:bg-zinc-500/10 transition-all cursor-pointer;
   }
 
+  @keyframes spin-gradient {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+  }
+
   .story-ring {
     padding: 2px;
     border-radius: 9999px;
     background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    transition: all 0.3s ease;
+  }
+  
+  .story-ring:hover {
+    animation: spin-gradient 2s linear infinite;
   }
 
   .btn-follow {
@@ -57,6 +67,31 @@
 
   .card {
     @apply bg-[var(--bg-card)] border border-[var(--border)] rounded-xl overflow-hidden;
+  }
+
+  .post-card-wrapper {
+    background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+    transition: all 0.3s ease;
+  }
+
+  .post-card-wrapper:hover {
+    box-shadow: 0 0 15px rgba(131, 58, 180, 0.3);
+  }
+
+  .active-nav-item {
+    position: relative;
+    background: linear-gradient(90deg, rgba(131,58,180,0.15), transparent) !important;
+  }
+
+  .active-nav-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10%;
+    bottom: 10%;
+    width: 3px;
+    background: linear-gradient(to bottom, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    border-radius: 3px;
   }
 
   .reel-container {

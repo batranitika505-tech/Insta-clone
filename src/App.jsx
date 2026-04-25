@@ -96,7 +96,7 @@ const CHATS = [
 const SideNavItem = ({ icon: Icon, label, active, onClick }) => (
   <div 
     onClick={onClick}
-    className={`nav-item group transition-all duration-200 ${active ? 'font-bold' : 'font-normal opacity-80 hover:opacity-100'}`}
+    className={`nav-item group transition-all duration-200 ${active ? 'font-bold active-nav-item' : 'font-normal opacity-80 hover:opacity-100'}`}
   >
     <Icon className={`w-6 h-6 transition-transform group-hover:scale-110 ${active ? 'stroke-[3px]' : 'stroke-[2px]'}`} />
     <span className="hidden xl:block text-[16px]">{label}</span>
@@ -110,7 +110,7 @@ const HomeFeed = ({ isDark }) => (
     <div className="flex gap-4 mb-8 overflow-x-auto no-scrollbar py-2">
       {STORIES.map(story => (
         <div key={story.id} className="flex flex-col items-center gap-1 cursor-pointer flex-shrink-0">
-          <div className={`relative ${story.unseen ? 'story-ring' : 'p-[1px] border border-zinc-500 rounded-full'}`}>
+          <div className={`relative ${story.unseen ? 'story-ring' : 'p-[2px] bg-zinc-300 dark:bg-zinc-600 rounded-full'}`}>
             <div className="w-[66px] h-[66px] rounded-full border-2 border-[var(--bg-primary)] overflow-hidden bg-zinc-200 dark:bg-zinc-800">
               <img src={story.img} alt={story.username} className="w-full h-full object-cover" style={{ objectPosition: story.pos || 'center' }} />
             </div>
@@ -135,8 +135,9 @@ const PostCard = ({ post }) => {
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <div className="card mb-4 max-w-[470px] mx-auto transition-colors duration-300">
-      <div className="flex items-center justify-between px-4 py-3">
+    <div className="post-card-wrapper mb-4 max-w-[470px] mx-auto p-[1px] rounded-[12px] transition-all duration-300 group">
+      <div className="card border-none bg-[var(--bg-card)] rounded-[11px] overflow-hidden w-full h-full transition-colors duration-300">
+        <div className="flex items-center justify-between px-4 py-3">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full overflow-hidden border border-zinc-200 dark:border-zinc-700">
             <img src={post.user.avatar} className="w-full h-full object-cover" style={{ objectPosition: post.user.pos || 'center' }} />
@@ -165,6 +166,7 @@ const PostCard = ({ post }) => {
           {!showMore && <button onClick={() => setShowMore(true)} className="text-zinc-500 text-xs ml-1 hover:underline">more</button>}
         </div>
         <input type="text" placeholder="Add a comment..." className="w-full bg-transparent border-t border-zinc-100 dark:border-zinc-800 pt-2 outline-none text-sm placeholder:text-zinc-500" />
+      </div>
       </div>
     </div>
   );
@@ -453,7 +455,19 @@ export default function App() {
         {/* Left Sidebar */}
         <aside className="fixed left-0 top-0 h-screen w-[72px] xl:w-[245px] border-r border-[var(--border)] flex flex-col p-3 z-50 bg-[var(--bg-primary)] transition-all">
           <div className="xl:px-3 mb-10 py-8">
-            <h1 className="hidden xl:block text-2xl font-bold tracking-tighter cursor-pointer select-none" onClick={() => setActivePage('home')}>Instagram</h1>
+            <h1 
+              className="hidden xl:block text-3xl font-bold tracking-tighter cursor-pointer select-none" 
+              style={{ 
+                fontFamily: "'Pacifico', cursive", 
+                background: "linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)", 
+                WebkitBackgroundClip: "text", 
+                WebkitTextFillColor: "transparent", 
+                filter: "drop-shadow(0 0 8px rgba(225, 48, 108, 0.4))" 
+              }} 
+              onClick={() => setActivePage('home')}
+            >
+              Instagram
+            </h1>
             <div className="xl:hidden flex justify-center cursor-pointer" onClick={() => setActivePage('home')}>
                <div className="w-7 h-7 bg-[var(--text-primary)] rounded-md"></div>
             </div>
